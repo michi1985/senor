@@ -1,0 +1,43 @@
+<div class="container">
+  <h2>店舗一覧</h2>
+  <%= render "store_search" %>
+
+  <div class="row">
+    <div class="table-responsive">
+      <table class="table table-striped table-bordered table-hover">
+        <!-- テーブルのヘッダー部 -->
+        <tr class="success">
+          <th><%= sort_link(@q, :customer_customer_name) %></th>
+          <th><%= sort_link(@q, :store_code) %></th>
+          <th><%= sort_link(@q, :store_name) %></th>
+          <th><%= sort_link(@q, :business_hours_start, "営業開始時間") %></th>
+          <th><%= sort_link(@q, :business_hours_end, "営業終了時間") %></th>
+          <th><%= sort_link(@q, :pos_type) %></th>
+          <th><%= sort_link(@q, :ip_address) %></th>
+          <th><%= sort_link(@q, :remarks) %></th>
+          <th><%= sort_link(@q, :tickets_count, "ｲﾝｼﾃﾞﾝﾄ件数") %></th>
+        </tr>
+        <!-- 件数が０件の時は「なし」を表示する -->
+        <% if @store.empty? %>
+          <tr>
+            <td colspan="9">なし</td>
+          </tr>
+        <% else %>
+          <% @store.each do |store| %>
+          <tr>
+            <td><%= link_to store.customer.customer_name, customer_path(store.customer_id) %></td>
+            <td><%= link_to store.store_code, customer_store_path(store.customer_id, store.id) %></td>
+            <td><%= link_to store.store_name, customer_store_path(store.customer_id, store.id) %></td>
+            <td><%= store.business_hours_start %></td>
+            <td><%= store.business_hours_end %></td>
+            <td><%= store.pos_type %></td>
+            <td><%= store.ip_address %></td>
+            <td><%= store.remarks %></td>
+            <td><%= store.tickets_count %></td>
+          </tr>
+          <% end %>
+        <% end %>
+      </table>
+    </div>
+  </div>
+</div>

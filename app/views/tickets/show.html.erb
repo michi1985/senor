@@ -1,0 +1,81 @@
+<div class="container">
+  <h1>
+  <%= "#" + @ticket.id.to_s %>&emsp;&emsp;<%= @ticket.title %>
+  </h1>
+
+  <ul class="list-inline text-right">
+    <li>
+      <span class="glyphicon glyphicon-th-list"></span>
+      <%= link_to "インシデント一覧に戻る", tickets_path %>
+    </li>
+      <span class="glyphicon glyphicon-pencil"></span>
+      <%= link_to '編集', edit_customer_store_ticket_path(@ticket.store.customer_id, @ticket.store_id, @ticket.id, ) %>
+    </li>
+    <!-- 管理者の場合は、削除ボタンを表示 -->
+    <% if current_user.admin? %>
+    <li>
+      <span class="glyphicon glyphicon-trash"></span>
+      <%= link_to '削除', [@customer, @store, @ticket], method: :delete, data: { confirm: '削除してもよろしいですか？' } %>
+    </li>
+    <% end %>
+  </ul>
+
+  <div class="table-responsive">
+    <table class="table table-bordered">
+      <tr>
+        <th class="active text-right col-md-3">会社名</th>
+        <td class="col-md-3"><%= link_to @ticket.store.customer.customer_name, customer_path(@store.customer_id) %></td>
+        <th class="active text-right col-md-3">店舗名</th>
+        <td class="col-md-3"><%= link_to @ticket.store.store_name, customer_store_path(@ticket.store.customer_id, @ticket.store.id) %></td>
+      </tr>
+      <tr>
+        <th class="active text-right col-md-3">ステータス</th>
+        <td class="col-md-3"><%= @ticket.status %></td>
+        <th class="active text-right col-md-3">問合者</th>
+        <td class="col-md-3"><%= @ticket.sender %></td>
+      </tr>
+      <tr>
+        <th class="active text-right col-md-3">受付者</th>
+        <td class="col-md-3"><%= @ticket.received_user.name %></td>
+        <th class="active text-right col-md-3">担当者</th>
+        <td class="col-md-3"><%= @ticket.assign_user.name %></td>
+      </tr>
+      <tr>
+        <th class="active text-right col-md-3">受付日</th>
+        <td class="col-md-3"><%= l @ticket.receive_date, format: :default %></td>
+        <th class="active text-right col-md-3">受付時刻</th>
+        <td class="col-md-3"><%= @ticket.receive_time.strftime('%H:%M:%S') %></td>
+      </tr>
+      <tr>
+        <th class="active text-right col-md-3">完了日</th>
+        <td class="col-md-3"><%= l @ticket.close_date, format: :default unless @ticket.close_date.nil? %></td>
+        <th class="active text-right col-md-3">完了時刻</th>
+        <td class="col-md-3"><%= @ticket.close_time.strftime('%H:%M:%S') unless @ticket.close_time.nil? %></td>
+      </tr>
+      <tr>
+        <th class="active text-right col-md-3">期日</th>
+        <td class="col-md-3"><%= l @ticket.limit_date, format: :default %></td>
+      </tr>
+    </table>
+  </div>
+  <div class="table-responsive">
+    <table class="table table-bordered">
+      <tr>
+        <th class="active text-right">問合せ内容</th>
+        <td class="col-md-9"><%= @ticket.content %></td>
+      </tr>
+      <tr>
+        <th class="active text-right">対応内容</th>
+        <td class="col-md-9"><%= @ticket.detail %></td>
+      </tr>
+      <tr>
+        <th class="active text-right">対応結果</th>
+        <td class="col-md-3"><%= @ticket.result %></td>
+      </tr>
+      <tr>
+        <th class="active text-right">備考</th>
+        <td class="col-md-9"><%= @ticket.remarks %></td>
+      </tr>
+    </table>
+  </div>
+</div>

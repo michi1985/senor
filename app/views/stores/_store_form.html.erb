@@ -1,0 +1,160 @@
+<%= form_for [@customer, @store] do |f| %>
+<%= render 'layouts/errMsg', obj: @store %>
+  <table class="table table-bordered ">
+    <tbody>
+
+      <div class="form-group">
+        <tr>
+          <td class="active text-right"><%= f.label :customer_id, class:"control-label" %></td>
+          <td><%= f.text_field :customer_id, readonly: true, class:"form-control" %></td>
+        </tr>
+      </div>
+
+      <%= fields_for @store.customer do |customer| %>
+      <div class="form-group">
+        <tr>
+          <td class="active text-right"><%= customer.label :customer_name, class:"control-label" %></td>
+          <td><%= customer.text_field :customer_name, readonly: true, class:"form-control" %></td>
+        </tr>
+      </div>
+      <% end %>
+
+      <div class="form-group">
+        <tr>
+          <td class="active text-right"><%= f.label :store_code, class:"control-label" %></td>
+          <td><%= f.text_field :store_code, autofocus: true, class:"form-control" %></td>
+        </tr>
+      </div>
+
+      <div class="form-group">
+        <tr>
+          <td class="active text-right"><%= f.label :store_name, class:"control-label" %></td>
+          <td><%= f.text_field :store_name, class:"form-control" %></td>
+        </tr>
+      </div>
+
+      <div class="form-group">
+        <tr>
+          <td rowspan="4", class="active text-right">
+            <b>住所</b>
+          </td>
+          <td>
+            <%= f.label :postal_code, class:"control-label" %>
+            <%= f.text_field :postal_code, class:"form-control" %>
+          </td>
+        </tr>
+      </div>
+
+      <div class="form-group">
+        <tr>
+          <td>
+            <%= f.label :prefectures, class:"control-label" %>
+            <%= f.text_field :prefectures, class:"form-control" %>
+          </td>
+        </tr>
+      </div>
+
+      <div class="form-group">
+        <tr>
+          <td>
+            <%= f.label :city, class:"control-label" %>
+            <%= f.text_field :city, class:"form-control" %>
+          </td>
+        </tr>
+      </div>
+
+      <div class="form-group">
+        <tr>
+          <td>
+            <%= f.label :town_name, class:"control-label" %>
+            <%= f.text_field :town_name, class:"form-control" %>
+          </td>
+        </tr>
+      </div>
+
+      <div class="form-group">
+        <tr>
+          <td class="active text-right">
+            <%= f.label :phone_number, class:"control-label" %>
+          </td>
+          <td>
+            <%= f.text_field :phone_number, class:"form-control" %>
+          </td>
+        </tr>
+      </div>
+
+      <div class="form-group">
+        <tr>
+          <td class="active text-right">
+            <%= f.label :fax_number, class:"control-label" %>
+          </td>
+          <td>
+            <%= f.text_field :fax_number, class:"form-control" %>
+          </td>
+        </tr>
+      </div>
+
+      <div class="form-group">
+        <tr>
+          <td class="active text-right">
+            <%= f.label :business_hours_start, class:"control-label" %>
+          </td>
+          <td>
+            <%= f.text_field :business_hours_start, class:"form-control" %>
+          </td>
+        </tr>
+      </div>
+
+      <div class="form-group">
+        <tr>
+          <td class="active text-right">
+            <%= f.label :business_hours_end, class:"control-label" %>
+          </td>
+          <td>
+            <%= f.text_field :business_hours_end, class:"form-control" %>
+          </td>
+        </tr>
+      </div>
+
+
+      <div class="form-group">
+        <tr>
+          <td class="active text-right">
+            <%= f.label :pos_type, class:"control-label" %>
+          </td>
+          <td>
+            <%= f.text_field :pos_type, class:"form-control" %>
+          </td>
+        </tr>
+      </div>
+
+      <div class="form-group">
+        <tr>
+          <td class="active text-right">
+            <%= f.label :ip_address, class:"control-label" %>
+          </td>
+          <td>
+            <%= f.text_field :ip_address, class:"form-control" %>
+          </td>
+        </tr>
+      </div>
+
+      <div class="form-group">
+        <tr>
+          <td class="active text-right">
+            <%= f.label :remarks, class:"control-label" %>
+          </td>
+          <td>
+            <%= f.text_field :remarks, class:"form-control" %>
+          </td>
+        </tr>
+      </div>
+
+    </tbody>
+  </table>
+
+  <div class="actions col-md-offset-9 col-md-3">
+    <%= f.submit class:"btn btn-lg btn-primary btn-block" %>
+  </div>
+
+<% end %>

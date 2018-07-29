@@ -1,0 +1,17 @@
+<div class="container">
+  <div class="row">
+    <h2>ダッシュボード</h2><hr>
+
+    <div class="thumbnail">
+      <div class="caption">
+        <p><%= current_user.name %>さんが担当しているインシデント （<%= @assigned_tickets.count %>件）</p>
+        <%= render 'dashbords_tickets', obj: @assigned_tickets %>
+      </div>
+    </div>
+
+    <div class="thumbnail">
+      <div class="caption">
+        <p>期日が過ぎているインシデント （<%= @expired_tickets.count %>件）</p>
+        <%= render 'dashbords_tickets', obj: @expired_tickets %>
+      </div>
+    </div>

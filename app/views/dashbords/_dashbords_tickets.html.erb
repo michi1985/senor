@@ -1,0 +1,31 @@
+<div class="table-responsive">
+  <table class="table table-condensed table-striped table-bordered table-hover">
+    <tr class="success">
+      <th class="col-md-1">No</th>
+      <th class="col-md-3">タイトル</th>
+      <th class="col-md-2">会社名</th>
+      <th class="col-md-2">店舗名</th>
+      <th class="col-md-1">受付日</th>
+      <th class="col-md-1">期日</th>
+      <th class="col-md-2">担当者</th>
+    </tr>
+    <!-- インシデント件数が０件の時は「なし」を表示する -->
+    <% if obj.empty? %>
+      <tr>
+        <td colspan="7">なし</td>
+      </tr>
+    <% else %>
+      <% obj.each do |ticket| %>
+        <tr>
+          <td><%= ticket.id %></td>
+          <td><%= link_to ticket.title, customer_store_ticket_path(ticket.store.customer_id, ticket.store_id, ticket.id) %></td>
+          <td><%= ticket.store.customer.customer_name %></td>
+          <td><%= ticket.store.store_name %></td>
+          <td><%= l ticket.receive_date, format: :default %></td>
+          <td><%= l ticket.limit_date, format: :default %></td>
+          <td><%= ticket.assign_user.name %></td>
+        </tr>
+      <% end %>
+    <% end %>
+  </table>
+</div>

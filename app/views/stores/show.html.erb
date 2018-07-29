@@ -1,0 +1,140 @@
+<div class="container">
+  <h1>
+  <%= "#" + @store.store_code %>&emsp;&emsp;<%= @store.store_name %>
+  </h1>
+
+  <ul class="list-inline text-right">
+    <li>
+      <span class="glyphicon glyphicon-th-list"></span>
+      <%= link_to "店舗一覧に戻る", stores_path %>
+    </li>
+    <li>
+      <span class="glyphicon glyphicon-plus"></span>
+      <%= link_to "インシデントを登録する", new_customer_store_ticket_path(@customer, @store) %>
+    <li>
+      <span class="glyphicon glyphicon-pencil"></span>
+      <%= link_to '編集', edit_customer_store_path(@store.customer_id, @store.id) %>
+    </li>
+    <!-- 管理者の場合は、削除ボタンを表示 -->
+    <% if current_user.admin? %>
+    <li>
+      <span class="glyphicon glyphicon-trash"></span>
+      <%= link_to '削除', [@customer, @store], method: :delete, data: { confirm: '削除してもよろしいですか？' } %>
+    </li>
+    <% end %>
+  </ul>
+
+  <div class="table-responsive">
+    <table class="table table-bordered">
+      <tr>
+        <th class="active text-right">会社名</th>
+        <td><%= link_to @store.customer.customer_name, customer_path(@store.customer_id) %></td>
+      </tr>
+      <tr>
+        <th class="active text-right">郵便番号</th>
+        <td><%= @store.postal_code %></td>
+      </tr>
+        <th class="active text-right">都道府県</th>
+        <td><%= @store.prefectures %></td>
+      </tr>
+      <tr>
+        <th class="active text-right">市区町村</th>
+        <td><%= @store.city %></td>
+      </tr>
+      <tr>
+        <th class="active text-right">町名・番地・建物名</th>
+        <td><%= @store.town_name %></td>
+      </tr>
+      <tr>
+        <th class="active text-right">電話番号</th>
+        <td><%= @store.phone_number %></td>
+      </tr>
+      <tr>
+        <th class="active text-right">FAX番号</th>
+        <td><%= @store.fax_number %></td>
+      </tr>
+      <tr>
+        <th class="active text-right">営業時間</th>
+        <td><%= @store.business_hours_start %>〜<%= @store.business_hours_end %></td>
+      </tr>
+      <tr>
+        <th class="active text-right">POS機種</th>
+        <td><%= @store.pos_type %></td>
+      </tr>
+      <tr>
+        <th class="active text-right">IPアドレス</th>
+        <td><%= @store.ip_address %></td>
+      </tr>
+      <tr>
+        <th class="active text-right">インシデント件数</th>
+        <td>
+        <%= @store.tickets.count %> 件
+        <%= link_to "（インシデント一覧を表示する）", tickets_path %>
+        </td>
+      </tr>
+      <tr>
+        <th class="active text-right">備考</th>
+        <td><%= @store.remarks %></td>
+      </tr>
+      <tr>
+        <th class="active text-right">地図</th>
+        <td>
+          <!-- 住所の緯度、経度をGoogleMapsに渡すためのパラメータを指定 -->
+          <span id="latitude" data-latitude-id="<%= @store.latitude %>"></span>
+          <span id="longitude" data-longitude-id="<%= @store.longitude %>"></span>
+          <!-- GoogleMapsを表示 -->
+          <div id="map" style="width:300px; height:300px"></div>
+          <div>
+            <%= "〒" + @store.postal_code %>
+            <%= @store.prefectures %>
+            <%= @store.city %>
+            <%= @store.town_name %>
+          </div>
+      </td>
+      </tr>
+      <tr>
+        <th class="active text-right">登録日時</th>
+        <td><%= l @store.created_at, format: :default %></td>
+      </tr>
+      <tr>
+        <tr>
+          <th class="active text-right">更新日時</th>
+          <td><%= l @store.updated_at, format: :default %></td>
+        </tr>
+        <tr>
+
+    </table>
+  </div>
+</div>
+
+<!-- GoogleMapを表示するためのjs ココカラ-->
+  <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDTL0X-TbmwRU0bHv4nCu91wSFn4D2bxsY&sensor=false&callback=init"></script>
+  <script type="text/javascript">
+  function init() {
+    // 緯度経度を取得
+    var latitude  = $('#latitude').data('latitude-id');
+    var longitude = $('#longitude').data('longitude-id');
+  // 緯度経度の指定
+    var latlng = new google.maps.LatLng(latitude,longitude);
+
+    // マップの表示オプションを指定
+    var options = {
+    zoom: 15,
+    center: latlng,
+    mapTypeId: google.maps.MapTypeId.ROADMAP,
+    };
+
+    // 指定のタグにマップを表示
+    var map = new google.maps.Map(document.getElementById("map"), options);
+
+    // ピンを立てる
+    new google.maps.Marker({
+      position: latlng,
+      map: map
+    });
+  };
+
+  google.maps.event.addDomListener(window, 'load', init);
+
+  </script>
+<!-- GoogleMapを表示 ココマデ-->

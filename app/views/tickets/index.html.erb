@@ -1,0 +1,41 @@
+<div class="container">
+  <h2>インシデント一覧</h2>
+  <%= render "ticket_search" %>
+
+  <div class="row">
+    <div class="table-responsive">
+      <table class="table table-striped table-bordered table-hover">
+        <!-- テーブルのヘッダー部 -->
+        <tr class="success">
+          <th><%= sort_link(@q, :id, "No") %></th>
+          <th><%= sort_link(@q, :title) %></th>
+          <th><%= sort_link(@q, :store_customer_customer_name) %></th>
+          <th><%= sort_link(@q, :store_store_name) %></th>
+          <th><%= sort_link(@q, :status) %></th>
+          <th><%= sort_link(@q, :receive_date) %></th>
+          <th><%= sort_link(@q, :received_user_name, "受付者") %></th>
+          <th><%= sort_link(@q, :assigned_user_name, "担当者") %></th>
+        </tr>
+        <!-- 件数が０件の時は「なし」を表示する -->
+        <% if @ticket.empty? %>
+          <tr>
+            <td colspan="8">なし</td>
+          </tr>
+        <% else %>
+          <% @ticket.each do |ticket| %>
+            <tr>
+              <td><%= ticket.id %></td>
+              <td><%= link_to ticket.title, customer_store_ticket_path(ticket.store.customer_id, ticket.store_id, ticket.id) %></td>
+              <td><%= ticket.store.customer.customer_name %></td>
+              <td><%= ticket.store.store_name %></td>
+              <td><%= ticket.status %></td>
+              <td><%= l ticket.receive_date, format: :default %></td>
+              <td><%= ticket.received_user.name %></td>
+              <td><%= ticket.assign_user.name %></td>
+            </tr>
+          <% end %>
+        <% end %>
+      </table>
+    </div>
+  </div>
+</div>

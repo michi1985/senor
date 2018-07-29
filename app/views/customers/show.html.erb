@@ -1,0 +1,83 @@
+<div class="container">
+  <h1><%= "#" + @customer.id.to_s%>&emsp;&emsp;<%= @customer.customer_name %></h1>
+
+  <ul class="list-inline text-right">
+    <li>
+      <span class="glyphicon glyphicon-th-list"></span>
+      <%= link_to "顧客一覧に戻る", customers_path %>
+    </li>
+    <li>
+      <span class="glyphicon glyphicon-home"></span>
+      <%= link_to "店舗を登録する", new_customer_store_path(@customer) %>
+    <li>
+      <span class="glyphicon glyphicon-pencil"></span>
+      <%= link_to "編集", edit_customer_path %>
+    </li>
+    <!-- 管理者の場合は、削除ボタンを表示 -->
+    <% if current_user.admin? %>
+    <li>
+      <span class="glyphicon glyphicon-trash"></span>
+      <%= link_to '削除', customer_path, method: :delete, data: { confirm: '削除してもよろしいですか？' } %>
+    </li>
+    <% end %>
+  </ul>
+
+  <div class="table-responsive">
+    <table class="table table-bordered ">
+      <tbody>
+        <tr>
+          <th class="active text-right">画像</th>
+          <td><%= image_tag @customer.image, size: "100x100" %></td>
+        </tr>
+        <tr>
+          <th class="active text-right">事業</th>
+          <td><%= @customer.business %></td>
+        </tr>
+        <tr>
+          <th class="active text-right">郵便番号</th>
+          <td><%= @customer.postal_code %></td>
+        </tr>
+          <th class="active text-right">都道府県</th>
+          <td><%= @customer.prefectures %></td>
+        </tr>
+        <tr>
+          <th class="active text-right">市区町村</th>
+          <td><%= @customer.city %></td>
+        </tr>
+        <tr>
+          <th class="active text-right">町名・番地・建物名</th>
+          <td><%= @customer.town_name %></td>
+        </tr>
+        <tr>
+          <th class="active text-right">電話番号</th>
+          <td><%= @customer.phone_number %></td>
+        </tr>
+        <tr>
+          <th class="active text-right">FAX番号</th>
+          <td><%= @customer.fax_number %></td>
+        </tr>
+        <tr>
+          <th class="active text-right">HP</th>
+          <td><%= link_to @customer.url, @customer.url %></td>
+        </tr>
+        <tr>
+          <th class="active text-right">店舗数</th>
+          <td>
+          <%= @customer.stores_count %> 店舗
+          <%= link_to "（店舗一覧を表示する）", stores_path(@customer) %>
+          </td>
+        </tr>
+        <tr>
+          <th class="active text-right">登録日時</th>
+          <td><%= l @customer.created_at, format: :default %></td>
+        </tr>
+        <tr>
+          <tr>
+            <th class="active text-right">更新日時</th>
+            <td><%= l @customer.updated_at, format: :default %></td>
+          </tr>
+          <tr>
+      </tbody>
+    </table>
+  </div>
+</div>

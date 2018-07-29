@@ -1,0 +1,41 @@
+<nav class="navbar navbar-inverse">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbarEexample">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="#">インシデント管理システム</a>
+		</div>
+
+		<!--navbarメインメニュー-->
+		<div class="collapse navbar-collapse" id="navbarEexample">
+				<% unless user_signed_in? %>
+				<!-- ログインしていない時はnavbarを表示しない -->
+				<% else %>
+				 <!-- ログインしている時 -->
+				 <ul class="nav navbar-nav">
+						<li><%= link_to "ダッシュボード", dashbords_home_path, class: "active" %></li>
+						<li><%= link_to "インシデント管理", tickets_path %></li>
+						<li><%= link_to "店舗管理", stores_path %></li>
+						<li><%= link_to "顧客管理", customers_path %></li>
+						<li><%= link_to "ユーザー管理", users_path %></li>
+					</ul>
+					<!--navbarアカウントメニュー右寄せ-->
+					<ul class="nav navbar-nav navbar-right">
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+								<%= current_user.name %>
+							<span class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li><%= link_to "アカウントを編集", edit_user_registration_path %></li>
+								<li><%= link_to "ログアウト", destroy_user_session_path, method: :delete %></li>
+							</ul>
+						</li>
+					</ul>
+				<% end %>
+    </div>
+  </div>
+</nav>

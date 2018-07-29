@@ -1,0 +1,8 @@
+<!-- deviseにエラーがある時 -->
+<% unless obj.errors.empty? %>
+  <script type= "text/javascript">
+    <% obj.errors.full_messages.each do |msg| %>
+      toastr.error('<%= msg %>');
+    <% end %>
+  </script>
+<% end %>
